@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks.Dataflow;
 
 namespace projet_pizza
@@ -36,9 +37,17 @@ namespace projet_pizza
 
             string badgeVegetarienne = vegetarienne ? " (V)" : " ";  // Si c'est vrai (V) sinon "" ? - : sinon
 
+            //var ingredientsAfficher = new List<string>();
+
+            //foreach (var ingredient in ingredients) {
+
+            //    ingredientsAfficher.Add(FormatPremiereLettreMajusscules (ingredient));
+            //}
+            
+            var ingredientsAfficher = ingredients.Select(i => FormatPremiereLettreMajusscules(i)).ToList();
             
             Console.WriteLine(" " + nomAfficher + badgeVegetarienne+" - "+ prix+"$");   
-            Console.WriteLine(string.Join(", ", ingredients)); // placer des virgules entre les element de la liste
+            Console.WriteLine(string.Join(", ", ingredientsAfficher)); // placer des virgules entre les element de la liste
             Console.WriteLine();
  
         }

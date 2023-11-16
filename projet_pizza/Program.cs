@@ -9,7 +9,7 @@ namespace projet_pizza
     class pizza
     {
         string nom;
-        float prix;
+       public float prix { get; init; }
         bool vegetarienne;
         List<string> ingredients;
 
@@ -33,7 +33,7 @@ namespace projet_pizza
 
             /* nom = nomMajiscules[0] + nomMinuscules.Substring(1);*/  // Nom de la prémière lettre en majuscule et démarrer à partir de deuxième caractère en minuscule
 
-            string nomAfficher = FormatPremiereLettreMajusscules(nom);
+            string nomAfficher = FormatPremiereLettreMajuscules(nom);
 
             string badgeVegetarienne = vegetarienne ? " (V)" : " ";  // Si c'est vrai (V) sinon "" ? - : sinon
 
@@ -41,10 +41,10 @@ namespace projet_pizza
 
             //foreach (var ingredient in ingredients) {
 
-            //    ingredientsAfficher.Add(FormatPremiereLettreMajusscules (ingredient));
+            //    ingredientsAfficher.Add(FormatPremiereLettreMajuscules (ingredient));
             //}
             
-            var ingredientsAfficher = ingredients.Select(i => FormatPremiereLettreMajusscules(i)).ToList();
+            var ingredientsAfficher = ingredients.Select(i => FormatPremiereLettreMajuscules(i)).ToList();
             
             Console.WriteLine(" " + nomAfficher + badgeVegetarienne+" - "+ prix+"$");   
             Console.WriteLine(string.Join(", ", ingredientsAfficher)); // placer des virgules entre les element de la liste
@@ -52,7 +52,7 @@ namespace projet_pizza
  
         }
 
-        private static string FormatPremiereLettreMajusscules(string s)
+        private static string FormatPremiereLettreMajuscules(string s)
         {
             if (string.IsNullOrEmpty(s))
                 return s;
@@ -83,11 +83,54 @@ namespace projet_pizza
 
             };
 
+            //listepizzas = listepizzas.OrderByDescending(p=> p.prix).ToList();   
+            //listepizzas = listepizzas.OrderBy(p=> p.prix).ToList();
+
+            float prixMin = listepizzas[0].prix;
+            float prixMax = listepizzas[0].prix;
+            pizza pizzaPrixMin = listepizzas[0];
+            pizza pizzaPrixMax = listepizzas[0];    
+
+            //for(int i = 0; i < listepizzas.Count; i++)
+            //{
+            //   if(prixMax < listepizzas[i].prix)
+            //    {
+            //        prixMax = listepizzas[i].prix;
+            //    }
+
+            //   else if (prixMin< listepizzas[i].prix)
+
+            //    {
+            //        prixMin = listepizzas[i].prix;
+            //    }            
+            //}
+
             foreach (var pizza in listepizzas)
             {
-
                 pizza.Afficher();
+
+                if (prixMax < pizza.prix)
+                {
+                    prixMax = pizza.prix;
+                    pizzaPrixMax = pizza; 
+                }
+
+                else if (prixMin > pizza.prix)
+
+                {
+                    prixMin = pizza.prix;
+                    pizzaPrixMin = pizza;
+                }
+
             }
+
+            Console.WriteLine("Pizza la moins chère est : ");
+            pizzaPrixMin.Afficher();
+
+            Console.WriteLine();
+
+            Console.WriteLine("Pizza la plus chère est de : " );
+            pizzaPrixMax.Afficher();    
         }
     }
 }

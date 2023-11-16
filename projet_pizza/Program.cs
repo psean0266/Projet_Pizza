@@ -82,16 +82,55 @@ namespace projet_pizza
                 new pizza("complète", 9.5f, false,new List<string>{"saumon", "Oignon","Mozarella, tomate"}),
 
             };
-            
-            listepizzas = listepizzas.OrderByDescending(p=> p.prix).ToList();   
 
-            listepizzas = listepizzas.OrderBy(p=> p.prix).ToList();
+            //listepizzas = listepizzas.OrderByDescending(p=> p.prix).ToList();   
+            //listepizzas = listepizzas.OrderBy(p=> p.prix).ToList();
+
+            float prixMin = listepizzas[0].prix;
+            float prixMax = listepizzas[0].prix;
+            pizza pizzaPrixMin = listepizzas[0];
+            pizza pizzaPrixMax = listepizzas[0];    
+
+            //for(int i = 0; i < listepizzas.Count; i++)
+            //{
+            //   if(prixMax < listepizzas[i].prix)
+            //    {
+            //        prixMax = listepizzas[i].prix;
+            //    }
+
+            //   else if (prixMin< listepizzas[i].prix)
+
+            //    {
+            //        prixMin = listepizzas[i].prix;
+            //    }            
+            //}
 
             foreach (var pizza in listepizzas)
             {
-
                 pizza.Afficher();
+
+                if (prixMax < pizza.prix)
+                {
+                    prixMax = pizza.prix;
+                    pizzaPrixMax = pizza; 
+                }
+
+                else if (prixMin > pizza.prix)
+
+                {
+                    prixMin = pizza.prix;
+                    pizzaPrixMin = pizza;
+                }
+
             }
+
+            Console.WriteLine("Pizza la moins chère est : ");
+            pizzaPrixMin.Afficher();
+
+            Console.WriteLine();
+
+            Console.WriteLine("Pizza la plus chère est de : " );
+            pizzaPrixMax.Afficher();    
         }
     }
 }

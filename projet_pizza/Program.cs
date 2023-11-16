@@ -9,7 +9,7 @@ namespace projet_pizza
     class pizza
     {
         string nom;
-        float prix;
+       public float prix { get; init; }
         bool vegetarienne;
         List<string> ingredients;
 
@@ -33,7 +33,7 @@ namespace projet_pizza
 
             /* nom = nomMajiscules[0] + nomMinuscules.Substring(1);*/  // Nom de la prémière lettre en majuscule et démarrer à partir de deuxième caractère en minuscule
 
-            string nomAfficher = FormatPremiereLettreMajusscules(nom);
+            string nomAfficher = FormatPremiereLettreMajuscules(nom);
 
             string badgeVegetarienne = vegetarienne ? " (V)" : " ";  // Si c'est vrai (V) sinon "" ? - : sinon
 
@@ -41,10 +41,10 @@ namespace projet_pizza
 
             //foreach (var ingredient in ingredients) {
 
-            //    ingredientsAfficher.Add(FormatPremiereLettreMajusscules (ingredient));
+            //    ingredientsAfficher.Add(FormatPremiereLettreMajuscules (ingredient));
             //}
             
-            var ingredientsAfficher = ingredients.Select(i => FormatPremiereLettreMajusscules(i)).ToList();
+            var ingredientsAfficher = ingredients.Select(i => FormatPremiereLettreMajuscules(i)).ToList();
             
             Console.WriteLine(" " + nomAfficher + badgeVegetarienne+" - "+ prix+"$");   
             Console.WriteLine(string.Join(", ", ingredientsAfficher)); // placer des virgules entre les element de la liste
@@ -52,7 +52,7 @@ namespace projet_pizza
  
         }
 
-        private static string FormatPremiereLettreMajusscules(string s)
+        private static string FormatPremiereLettreMajuscules(string s)
         {
             if (string.IsNullOrEmpty(s))
                 return s;
@@ -82,6 +82,10 @@ namespace projet_pizza
                 new pizza("complète", 9.5f, false,new List<string>{"saumon", "Oignon","Mozarella, tomate"}),
 
             };
+            
+            listepizzas = listepizzas.OrderByDescending(p=> p.prix).ToList();   
+
+            listepizzas = listepizzas.OrderBy(p=> p.prix).ToList();
 
             foreach (var pizza in listepizzas)
             {

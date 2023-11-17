@@ -9,9 +9,9 @@ namespace projet_pizza
     class pizza
     {
         string nom;
-       public float prix { get; init; }
-        bool vegetarienne;
-        List<string> ingredients;
+       public float prix { get; private set; }
+       public  bool vegetarienne { get; private set; }
+       public  List<string> ingredients { get; private set; }
 
         public pizza (string nom , float prix, bool vegetarienne, List<string> ingredients)
         {
@@ -65,6 +65,11 @@ namespace projet_pizza
             return resultat;
         }
 
+        public bool ContientIngredient(string ingredient)
+        {
+            return ingredients.Where(i => i.ToLower().Contains("tomate")).ToList().Count > 0 ;
+        }
+
     }
      class Program
     {
@@ -79,7 +84,7 @@ namespace projet_pizza
                 new pizza("mexicaine", 13f, false, new List<string>{"Boeuf", "tomate","Mozarella, persil"}),
                 new pizza("Margherita", 8f, true, new List<string>{"sauce tomate","Mozarella"}),
                 new pizza("calzone", 12f, false,new List<string>{"kebab", "Oignon","Mozarella"}),
-                new pizza("complète", 9.5f, false,new List<string>{"saumon", "Oignon","Mozarella, tomate"}),
+                new pizza("complète", 9.5f, false,new List<string>{"saumon", "Oignon","Mozarella","tomates"}),
 
             };
 
@@ -88,22 +93,9 @@ namespace projet_pizza
 
             float prixMin = listepizzas[0].prix;
             float prixMax = listepizzas[0].prix;
-            pizza pizzaPrixMin = listepizzas[0];
-            pizza pizzaPrixMax = listepizzas[0];    
+            pizza pizzaPrixMin = null;
+            pizza pizzaPrixMax = null;    
 
-            //for(int i = 0; i < listepizzas.Count; i++)
-            //{
-            //   if(prixMax < listepizzas[i].prix)
-            //    {
-            //        prixMax = listepizzas[i].prix;
-            //    }
-
-            //   else if (prixMin< listepizzas[i].prix)
-
-            //    {
-            //        prixMin = listepizzas[i].prix;
-            //    }            
-            //}
 
             foreach (var pizza in listepizzas)
             {
@@ -130,7 +122,42 @@ namespace projet_pizza
             Console.WriteLine();
 
             Console.WriteLine("Pizza la plus chère est de : " );
-            pizzaPrixMax.Afficher();    
+            pizzaPrixMax.Afficher();
+
+
+            //Console.WriteLine("2--------------------QUE LES PIZZAS VEGETARIENNE--------------------------------");
+
+            //Console.WriteLine();
+
+            //listepizzas = listepizzas.Where(p => p.vegetarienne).ToList();
+
+            //foreach (var pizza in listepizzas)
+            //{
+            //    pizza.Afficher();
+            //}
+
+            //Console.WriteLine("------------------------FIN DES PIZZAS VEGETARIENNE--------------------------------");
+
+
+
+
+            Console.WriteLine("2--------------------QUE LES PIZZAS AVEC TOMATES--------------------------------");
+
+            Console.WriteLine();
+
+            //listepizzas = listepizzas.Where(p => p.ingredients.Where(i => i.ToLower().Contains("tomate")).ToList().Count>0).ToList();
+
+            listepizzas = listepizzas.Where(p => p.ContientIngredient("tomate")).ToList();
+
+            foreach (var pizza in listepizzas)
+            {
+                pizza.Afficher();
+
+            }
+
+            Console.WriteLine("------------------------FIN LES PIZZAS AVEC TOMATES--------------------------------");
+
+
         }
-    }
+     }
 }

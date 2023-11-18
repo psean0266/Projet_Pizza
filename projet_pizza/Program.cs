@@ -1,17 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
 
 namespace projet_pizza
 {
+    
+    class PizzaPersonalisee: pizza
+    {
+        static int NumeroPizzaPersonnalisee = 0;
+        public PizzaPersonalisee():base ("Personnalisée ", 5f, false, null)
+        {
+            
+            NumeroPizzaPersonnalisee++;
+            nom = "Personnalisée" + NumeroPizzaPersonnalisee;
+            ingredients = new List<string>();
+            
+            while (true)
+            {
+                Console.Write("Rentrez un ingrédient pour la pizza personnalisée "+NumeroPizzaPersonnalisee+ " (ENTER pour terminer): ");
+                var ingredient = Console.ReadLine();
 
+
+                if (string.IsNullOrWhiteSpace(ingredient))
+                {
+                    break;
+                }
+                else if (!ingredients.Contains(ingredient))
+                {
+                    ingredients.Add(ingredient);
+                }
+                else
+                {
+                    Console.WriteLine("ERREUR: L'ingredient "+ingredient+" existe déjà la dans liste");
+                }
+
+                Console.WriteLine(string.Join(", ", ingredients));
+                Console.WriteLine();
+                //foreach(var ingred in ingredients)
+                //{
+                //    Console.WriteLine(ingred);
+                //    Console.Write(string.Join(", ",ingred));
+
+                //    Console.WriteLine();
+                //}
+            }
+            
+            Console.ReadLine();
+            prix = 5 + ingredients.Count * 1.5f;
+        }     
+
+    }
     class pizza
     {
-        string nom;
-       public float prix { get; private set; }
+       protected string nom;
+       public float prix { get; protected set; }
        public  bool vegetarienne { get; private set; }
-       public  List<string> ingredients { get; private set; }
+       public  List<string> ingredients { get; protected set; }
 
         public pizza (string nom , float prix, bool vegetarienne, List<string> ingredients)
         {
@@ -85,6 +132,8 @@ namespace projet_pizza
                 new pizza("Margherita", 8f, true, new List<string>{"sauce tomate","Mozarella"}),
                 new pizza("calzone", 12f, false,new List<string>{"kebab", "Oignon","Mozarella"}),
                 new pizza("complète", 9.5f, false,new List<string>{"saumon", "Oignon","Mozarella","tomates"}),
+                new PizzaPersonalisee(),
+                new PizzaPersonalisee()
 
             };
 
@@ -156,8 +205,6 @@ namespace projet_pizza
             }
 
             Console.WriteLine("------------------------FIN LES PIZZAS AVEC TOMATES--------------------------------");
-
-
         }
      }
 }
